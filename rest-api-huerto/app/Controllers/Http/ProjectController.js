@@ -1,6 +1,6 @@
 'use strict'
 const Project = use('App/Models/Project');
-const AuthService = use('App/Services/AuhtService');
+const AuthService = use('App/Services/AuthService');
 class ProjectController {
     // return all objects
     async index({auth}){
@@ -31,8 +31,16 @@ class ProjectController {
         AuthService.verifyAuth(project, user);
         await project.delete();
         return project;
+    }
 
-
+    async update({auth, params, request}){
+        const user = await auth.getUser();
+        const {id} = params;
+        const project = await Project.find(id);
+        AuthService.verifyAuth(project, user);
+        project.merge(request.only('name'));
+        await project.save();
+        return project;
     }
 }
 

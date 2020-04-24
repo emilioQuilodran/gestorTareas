@@ -19,7 +19,7 @@ const Route = use('Route')
 Route.group(()=>{
   Route.post('users/register', 'UserController.store');
   Route.post('users/login', 'UserController.login');
-  Route.get('proyects', 'ProyectController.index').middleware('auth');
-  Route.post('proyects', 'ProyectController.create').middleware('auth');
-  
+  Route.get('projects', 'ProjectController.index').middleware('auth');
+  Route.post('projects', 'ProjectController.create').middleware('auth');
+  Route.delete('projects/:id', '')
 }).prefix('huertoApi/v1');

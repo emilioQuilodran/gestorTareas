@@ -36,7 +36,7 @@ class User extends Model {
   }
 
   proyects(){
-    return this.hasMany('App/Models/Proyecto');
+    return this.hasMany('App/Models/Project');
   }
 }
 

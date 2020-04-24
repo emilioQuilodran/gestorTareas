@@ -1,7 +1,7 @@
 'use strict'
-const Project = use('App/Models/Proyecto');
+const Project = use('App/Models/Project');
 
-class ProyectController {
+class ProjectController {
     // return all objects
     async index({auth}){
         const user = await auth.getUser();
@@ -20,6 +20,10 @@ class ProyectController {
         await user.proyects().save(project);
         return project;
     };
+
+    async destroy({auth, request , params}){
+        
+    }
 }
 
-module.exports = ProyectController
+module.exports = ProjectController

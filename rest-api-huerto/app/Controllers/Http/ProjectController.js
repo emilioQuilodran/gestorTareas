@@ -21,8 +21,21 @@ class ProjectController {
         return project;
     };
 
-    async destroy({auth, request , params}){
-        
+    async destroy({auth, response , params}){
+        const user = await auth.getUser();
+        // deconstruite man
+        const {id} = params;
+        const project = await Project.find(id);
+
+        if( project.user_id !== user.id ){
+            return response.status(403).json({
+                msj: "NO puedes eliminar un proyecto del cual no eres dueño"
+            })
+        }
+        await project.delete();
+        return project;
+
+
     }
 }
 

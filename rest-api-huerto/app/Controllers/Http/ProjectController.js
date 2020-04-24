@@ -1,6 +1,6 @@
 'use strict'
 const Project = use('App/Models/Project');
-
+const AuthService = use('App/Services/AuhtService');
 class ProjectController {
     // return all objects
     async index({auth}){
@@ -21,17 +21,14 @@ class ProjectController {
         return project;
     };
 
-    async destroy({auth, response , params}){
+    async destroy({auth, params}){
         const user = await auth.getUser();
         // deconstruite man
-        const {id} = params;
+        const id = params.id;
         const project = await Project.find(id);
 
-        if( project.user_id !== user.id ){
-            return response.status(403).json({
-                msj: "NO puedes eliminar un proyecto del cual no eres dueño"
-            })
-        }
+        // consume service
+        AuthService.verifyAuth(project, user);
         await project.delete();
         return project;
 
